@@ -27,4 +27,30 @@ repositories {
 dependencies {
     implementation('org.springframework.boot:spring-boot-starter-web')
     testImplementation('org.springframework.boot:spring-boot-starter-test')
+    annotationProcessor('org.projectlombok:lombok')
+    implementation('org.projectlombok:lombok')
+    testAnnotationProcessor('org.projectlombok:lombok')
+    testImplementation('org.projectlombok:lombok')
 }
+
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
+
+
+// lombok 테스트 시 생성자가 안만들어지고
+// lombok error: variable name not initialized in the default constructor private final String name; 에러 발생
+// 원인은 gradle 5부터는 어노테이션을 구별해서 추가해줘야한다고 함
+//dependencies {
+//    annotationProcessor 'org.projectlombok:lombok'
+//    implementation 'org.projectlombok:lombok'
+//    testAnnotationProcessor 'org.projectlombok:lombok'
+//    testImplementation 'org.projectlombok:lombok'
+//}
+//configurations {
+//    compileOnly {
+//        extendsFrom annotationProcessor
+//    }
+//}
