@@ -1,9 +1,13 @@
 package com.kms.project.springboot.web;
 
+import com.kms.project.springboot.config.auth.SecurityConfig;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.FilterType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -21,7 +25,12 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 // 선언할 경우 @Controller, @ControllerAdvice 등을 사용
 // 단, @Service, @Component, @Repository 등은 사용할 수 없음
 // 여기서는 컨트롤러만 사용하기 때문에 선언
-@WebMvcTest(controllers = HelloController.class)
+// 스캔 대상에서 SecurityConfig 제거
+@WebMvcTest(controllers = HelloController.class,
+            excludeFilters = {
+                    @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE,
+                            classes = SecurityConfig.class)
+            })
 public class HelloControllerTest {
     // 스프링이 관리하는 Bean을 주입 받음
     @Autowired
@@ -30,6 +39,7 @@ public class HelloControllerTest {
     // 이 클래스를 통해 HTTP GET, POST 등에 대한 API 테스트를 할 수 있음
     private MockMvc mvc;
 
+    @WithMockUser(roles = "USER")
     @Test
     public void return_hello() throws Exception {
         String hello = "hello";
@@ -51,6 +61,7 @@ public class HelloControllerTest {
         // Controller에서 "hello"를 리턴하기 때문에 이 값이 맞는지 검증
     }
 
+    @WithMockUser(roles = "USER")
     @Test
     public void return_helloDto() throws Exception {
         String name = "hello";
