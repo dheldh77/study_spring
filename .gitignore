@@ -1,3 +1,6 @@
 .gradle
 .idea
 /src/main/resources/application-oauth.yml
+.DS_Store
+bin
+build
