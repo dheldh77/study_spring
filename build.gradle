@@ -48,6 +48,8 @@ dependencies {
     implementation('org.springframework.session:spring-session-jdbc')
 //    테스트 시 인증되지 않은 사용자의 요청 처리
     implementation("org.springframework.security:spring-security-test")
+
+    implementation("org.mariadb.jdbc:mariadb-java-client")
 }
 
 configurations {
