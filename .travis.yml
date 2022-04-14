@@ -35,3 +35,12 @@ deploy:
     acl: private
     local_dir: deploy
     wait-until-deployed: true
+  - provider: codedeploy
+    access_key_id: $AWS_ACCESS_KEY
+    secret_access_key: $AWS_SECRET_KEY
+    bucket: freelec-springboot2-kms-build
+    key: freelec-springboot2-webservice.zip
+    build_type: zip
+    application: freelec-springboot2-webservice
+    region: ap-northeast-2
+    wait-unitl-deployed: true
