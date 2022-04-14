@@ -19,3 +19,19 @@ notifications:
   email:
     recipients:
       - dheldh77@icloud.com
+
+before_deploy:
+  - zip -r freelec-springboot2-webservice *
+  - mkdir -p deploy
+  - mv freelec-springboot2-webservice.zip deploy/freelec-springboot2-webservice.zip
+
+deploy:
+  - provider: s3
+    assess_key_id: $AWS_ACCESS_KEY
+    secret_access_key: $AWS_SECRET_KEY
+    bucket: freelec-springboot2-kms-build
+    region: ap-northeast-2
+    skip_cleanup: true
+    acl: private
+    local_dir: deploy
+    wait-until-deployed: true
